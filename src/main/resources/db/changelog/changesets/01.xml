@@ -35,7 +35,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="create_date" type="date">
                 <constraints nullable="false"/>

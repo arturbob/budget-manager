@@ -30,4 +30,8 @@ public class Budget {
     private Customer customer;
     @OneToMany(mappedBy = "budget")
     private Set<Expense> expenses = new HashSet<>();
+
+    public Integer numberOfExpenses(){
+        return expenses.size();
+    }
 }

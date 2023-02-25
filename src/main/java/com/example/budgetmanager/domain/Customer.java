@@ -29,10 +29,12 @@ public class Customer implements UserDetails, Serializable {
     private Role role;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @ToString.Exclude
-    private Set<Budget> figures = new HashSet<>();
+    private Set<Budget> budgets = new HashSet<>();
     private Boolean locked = false;
     private Boolean enabled = true;
-
+    public Integer numberOfBudgets(){
+        return budgets.size();
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());

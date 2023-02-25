@@ -2,6 +2,7 @@ package com.example.budgetmanager.domain;
 
 import com.example.budgetmanager.model.KindOfExpense;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Expense {
     private Long id;
     private String name;
     private Long price;
+    @CreatedDate
     private LocalDateTime dateOfExpense;
     private KindOfExpense kindOfExpense;
     @ManyToOne

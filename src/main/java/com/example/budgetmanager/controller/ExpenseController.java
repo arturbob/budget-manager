@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/expense")
@@ -19,12 +22,12 @@ public class ExpenseController {
     private final ExpenseService expenseService;
     private final ModelMapper modelMapper;
 
-    @PostMapping
-    public ResponseEntity<ExpenseDTO> save(ExpenseCommand expenseCommand) {
+    @PostMapping("/{budgetName}")
+    public ResponseEntity<ExpenseDTO> save(@Valid ExpenseCommand expenseCommand, @PathVariable("budgetName") String budgetName) {
         return new ResponseEntity<>(modelMapper
                 .map(expenseService
                         .save(modelMapper
-                                .map(expenseCommand, Expense.class)), ExpenseDTO.class), HttpStatus.OK);
+                                .map(expenseCommand, Expense.class), budgetName), ExpenseDTO.class), HttpStatus.OK);
     }
 
 }

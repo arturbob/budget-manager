@@ -3,6 +3,7 @@ package com.example.budgetmanager.domain;
 import com.example.budgetmanager.model.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,9 +35,11 @@ public class Customer implements UserDetails, Serializable {
     private Set<Budget> budgets = new HashSet<>();
     private Boolean locked = false;
     private Boolean enabled = true;
-    public Integer numberOfBudgets(){
+
+    public Integer numberOfBudgets() {
         return budgets.size();
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());

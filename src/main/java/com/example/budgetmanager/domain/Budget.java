@@ -1,10 +1,11 @@
 package com.example.budgetmanager.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Entity
 @ToString
 @EqualsAndHashCode
+@EntityListeners(AuditingEntityListener.class)
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

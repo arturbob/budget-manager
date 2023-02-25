@@ -1,9 +1,9 @@
 package com.example.budgetmanager.controller;
 
-import com.example.budgetmanager.command.BudgetCommand;
-import com.example.budgetmanager.domain.Budget;
-import com.example.budgetmanager.dto.BudgetDTO;
-import com.example.budgetmanager.service.BudgetService;
+import com.example.budgetmanager.command.ExpenseCommand;
+import com.example.budgetmanager.domain.Expense;
+import com.example.budgetmanager.dto.ExpenseDTO;
+import com.example.budgetmanager.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/budget")
-public class BudgetController {
-    private final BudgetService budgetService;
+@RequestMapping("api/v1/expense")
+@RequiredArgsConstructor
+public class ExpenseController {
+    private final ExpenseService expenseService;
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<BudgetDTO> save(BudgetCommand budgetCommand) {
+    public ResponseEntity<ExpenseDTO> save(ExpenseCommand expenseCommand) {
         return new ResponseEntity<>(modelMapper
-                .map(budgetService
+                .map(expenseService
                         .save(modelMapper
-                                .map(budgetCommand, Budget.class)), BudgetDTO.class), HttpStatus.CREATED);
+                                .map(expenseCommand, Expense.class)), ExpenseDTO.class), HttpStatus.OK);
     }
+
 }

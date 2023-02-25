@@ -1,9 +1,9 @@
 package com.example.budgetmanager.domain;
 
 import com.example.budgetmanager.model.KindOfExpense;
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor

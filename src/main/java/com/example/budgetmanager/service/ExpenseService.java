@@ -2,7 +2,7 @@ package com.example.budgetmanager.service;
 
 import com.example.budgetmanager.domain.Budget;
 import com.example.budgetmanager.domain.Expense;
-import com.example.budgetmanager.exception.BudgetNotFound;
+import com.example.budgetmanager.exception.BudgetNotFoundException;
 import com.example.budgetmanager.repository.BudgetRepository;
 import com.example.budgetmanager.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,6 @@ public class ExpenseService {
     public Budget findBudgetForAddNewExpense(String budgetName) {
         return budgetRepository.findBudgetByNameAndCustomer_Login(budgetName,
                         userDetailsService.getUserDetails().getUsername())
-                .orElseThrow(BudgetNotFound::new);
+                .orElseThrow(BudgetNotFoundException::new);
     }
 }

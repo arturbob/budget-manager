@@ -3,6 +3,7 @@ package com.example.budgetmanager.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @CreatedDate
     private LocalDate createDate;
     private LocalDate expirationDate;
     private Long budgetSize;
@@ -31,7 +33,7 @@ public class Budget {
     @OneToMany(mappedBy = "budget")
     private Set<Expense> expenses = new HashSet<>();
 
-    public Integer numberOfExpenses(){
+    public Integer numberOfExpenses() {
         return expenses.size();
     }
 }

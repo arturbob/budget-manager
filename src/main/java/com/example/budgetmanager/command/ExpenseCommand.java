@@ -3,7 +3,6 @@ package com.example.budgetmanager.command;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor

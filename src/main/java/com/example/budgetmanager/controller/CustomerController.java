@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/customer")
@@ -21,7 +23,7 @@ public class CustomerController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> save(CustomerCommand customerCommand) {
+    public ResponseEntity<CustomerDTO> save(@Valid CustomerCommand customerCommand) {
         return new ResponseEntity<>(modelMapper
                 .map(customerService
                         .save(modelMapper

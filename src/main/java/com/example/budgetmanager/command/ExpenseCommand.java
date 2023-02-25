@@ -2,7 +2,7 @@ package com.example.budgetmanager.command;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class ExpenseCommand {
+    @NotBlank(message = "Name of your expense cannot be blank!")
     private String name;
+    @NotBlank(message = "Price of your expense cannot be blank!")
     private Long price;
-    private LocalDateTime dateOfExpense;
+    @NotBlank(message = "Define kind of your expense (CRAVING/NEED)")
     private String kindOfExpense;
-    private String budgetName;
 }

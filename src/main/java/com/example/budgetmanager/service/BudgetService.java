@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BudgetService {
     private final BudgetRepository budgetRepository;
-
     public Budget save(Budget budget){
         return budgetRepository.save(budget);
     }

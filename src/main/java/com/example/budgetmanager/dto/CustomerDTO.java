@@ -1,9 +1,10 @@
 package com.example.budgetmanager.dto;
 
 import com.example.budgetmanager.model.Role;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @AllArgsConstructor
 @NoArgsConstructor

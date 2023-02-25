@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +27,11 @@ public class WebSecurityConfig {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
     @Bean
@@ -55,7 +61,7 @@ public class WebSecurityConfig {
                             try {
                                 authz
                                         .antMatchers(HttpMethod.POST, "/api/v1/budget").hasAnyAuthority("ADMIN", "USER")
-                                        .antMatchers(HttpMethod.POST, "api/v1/expense").hasAnyAuthority("ADMIN", "USER")
+                                        .antMatchers(HttpMethod.POST, "api/v1/expense/**").hasAnyAuthority("ADMIN", "USER")
                                         .antMatchers(HttpMethod.POST, "/api/v1/customer").permitAll()
                                         .anyRequest()
                                         .authenticated()
@@ -63,7 +69,9 @@ public class WebSecurityConfig {
                                         .sessionManagement()
                                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                                         .and()
-                                        .authenticationProvider(authenticationProvider());
+                                        .authenticationProvider(authenticationProvider())
+                                        .exceptionHandling()
+                                        .accessDeniedHandler(accessDeniedHandler());
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }

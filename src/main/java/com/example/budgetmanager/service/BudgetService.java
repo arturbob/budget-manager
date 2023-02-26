@@ -4,9 +4,9 @@ import com.example.budgetmanager.domain.Budget;
 import com.example.budgetmanager.exception.BudgetAlreadyExistException;
 import com.example.budgetmanager.repository.BudgetRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +20,8 @@ public class BudgetService {
         }
         return budgetRepository.save(budget);
     }
-    public List<Budget> listAll(){
-        return budgetRepository.findBudgetByCustomer_Login(userDetailsService.getUserDetails().getUsername());
+
+    public Page<Budget> listAllWithPagination(Pageable pageable) {
+        return budgetRepository.findBudgetsByCustomer_Login(userDetailsService.getUserDetails().getUsername(), pageable);
     }
 }

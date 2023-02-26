@@ -14,7 +14,7 @@ public class CustomerService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public Customer save(Customer customer) {
-        if (customerRepository.existsCustomerByLogin(customer.getLogin())) {
+        if (customerRepository.existsByLogin(customer.getLogin())) {
             throw new CustomerAlreadyExistException();
         }
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));

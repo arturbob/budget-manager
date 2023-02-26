@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface BudgetRepository extends JpaRepository<Budget, Long> {
     Optional<Budget> findBudgetByNameAndCustomer_Login(String budgetName, String login);
-    boolean existsBudgetByName(String name);
+    boolean existsBudgetByNameAndCustomer_Login(String name, String login);
     Page<Budget> findBudgetsByCustomer_Login(String login, Pageable pageable);
 }

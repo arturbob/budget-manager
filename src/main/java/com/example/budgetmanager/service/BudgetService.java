@@ -14,7 +14,7 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final CustomUserDetailsService userDetailsService;
 
-    public Budget save(Budget budget) {
+    public Budget save(Budget budget){
         if (budgetRepository.existsBudgetByNameAndCustomer_Login(budget.getName(),
                 userDetailsService.getUserDetails().getUsername())) {
             throw new BudgetAlreadyExistException();

@@ -18,6 +18,7 @@ import java.util.Set;
 @Entity
 @ToString
 @EqualsAndHashCode
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Budget implements Serializable {
     @Id

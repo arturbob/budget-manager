@@ -20,6 +20,7 @@ import java.util.Set;
 @Entity
 @ToString
 @EqualsAndHashCode
+@Builder
 public class Customer implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

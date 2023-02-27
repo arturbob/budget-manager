@@ -61,7 +61,7 @@ public class WebSecurityConfig {
                             try {
                                 authz
                                         .antMatchers(HttpMethod.POST, "/api/v1/budget").hasAnyAuthority("ADMIN", "USER")
-                                        .antMatchers(HttpMethod.POST, "api/v1/expense/**").hasAnyAuthority("ADMIN", "USER")
+                                        .antMatchers(HttpMethod.POST, "/api/v1/expense").hasAnyAuthority("ADMIN", "USER")
                                         .antMatchers(HttpMethod.POST, "/api/v1/customer").permitAll()
                                         .anyRequest()
                                         .authenticated()

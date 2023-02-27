@@ -25,7 +25,6 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDTO> save(@RequestBody @Valid CustomerCommand customerCommand) {
-
         return new ResponseEntity<>(modelMapper
                 .map(customerService
                         .save(modelMapper

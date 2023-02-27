@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Entity
+@Builder
 public class Expense implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +23,7 @@ public class Expense implements Serializable {
     private Long price;
     @CreatedDate
     private LocalDateTime dateOfExpense;
+    @Enumerated(EnumType.STRING)
     private KindOfExpense kindOfExpense;
     @ManyToOne
     @JoinColumn(name = "budget_id")

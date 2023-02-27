@@ -12,11 +12,12 @@ import javax.validation.constraints.Size;
 @ToString
 public class CustomerCommand {
     @NotBlank(message = "Your name cannot be blank!")
-    @Size(min = 3, message = "Your name cannot be smaller than 3 letters!")
+    @Size(min = 3, message = "Your name cannot be shorter than 3 letters!")
     private String name;
-    @Size(min = 5, message = "Your login cannot be smaller than 5 letters!")
+    @NotBlank(message = "Your login cannot be blank!")
+    @Size(min = 5, message = "Your login cannot be shorter than 5 letters!")
     private String login;
-    @Size(min = 5, max = 20, message = "Your password must be between 5 and 20")
+    @Size(min = 5, max = 20, message = "Your password '${validatedValue}' must be between {min} and {max} characters long")
     private String password;
     @NotBlank(message = "Define your role (ADMIN/USER)")
     private String role;

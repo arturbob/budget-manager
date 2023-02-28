@@ -1,7 +1,6 @@
-package com.example.budgetmanager.domain;
+package com.example.budgetmanager.model;
 
 import com.example.budgetmanager.dto.ExpenseDTO;
-import com.example.budgetmanager.model.ValueOfExpense;
 import lombok.*;
 
 @Getter

@@ -30,7 +30,7 @@ public class Customer implements UserDetails, Serializable {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private Set<Budget> budgets = new HashSet<>();
     private Boolean locked = false;

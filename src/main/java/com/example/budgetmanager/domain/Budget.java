@@ -28,7 +28,8 @@ public class Budget implements Serializable {
     @CreatedDate
     private LocalDate createDate;
     private LocalDate expirationDate;
-    private Long budgetSize;
+    private Double budgetSize;
+    private Double budgetLeft;
     @CreatedBy
     @ManyToOne
     @ToString.Exclude

@@ -20,7 +20,7 @@ public class Expense implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long price;
+    private Double price;
     @CreatedDate
     private LocalDateTime dateOfExpense;
     @Enumerated(EnumType.STRING)

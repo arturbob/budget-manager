@@ -20,5 +20,5 @@ public class BudgetCommand {
     private LocalDate expirationDate;
     @Min(1L)
     @NotNull(message = "Your budget cannot be null")
-    private Long budgetSize;
+    private Double budgetSize;
 }

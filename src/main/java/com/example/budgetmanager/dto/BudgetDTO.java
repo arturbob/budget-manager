@@ -13,6 +13,7 @@ public class BudgetDTO {
     private String name;
     private LocalDate createDate;
     private LocalDate expirationDate;
-    private Long budgetSize;
+    private Double budgetSize;
+    private Double budgetLeft;
     private Integer numberOfExpenses;
 }

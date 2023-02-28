@@ -1,7 +1,7 @@
 package com.example.budgetmanager.controller;
 
 import com.example.budgetmanager.command.ExpenseCommand;
-import com.example.budgetmanager.domain.BudgetStatus;
+import com.example.budgetmanager.model.BudgetStatus;
 import com.example.budgetmanager.dto.ExpenseDTO;
 import com.example.budgetmanager.service.ExpenseService;
 import lombok.RequiredArgsConstructor;

@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ExpenseDTO {
     private String name;
     private Long price;
-    private LocalDateTime dateOfExpense;
+    private LocalDate dateOfExpense;
     @Enumerated(EnumType.STRING)
     private KindOfExpense kindOfExpense;
 }

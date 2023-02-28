@@ -8,7 +8,6 @@ import com.example.budgetmanager.model.Role;
 import com.example.budgetmanager.repository.BudgetRepository;
 import com.example.budgetmanager.repository.CustomerRepository;
 import com.example.budgetmanager.repository.ExpenseRepository;
-import com.example.budgetmanager.service.ExpenseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
@@ -27,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -54,11 +51,10 @@ public class ExpenseControllerIT {
     @Autowired
     private ExpenseRepository expenseRepository;
     private BCryptPasswordEncoder encoder;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setup() {
-        objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         encoder = new BCryptPasswordEncoder();
         this.mockMvc = MockMvcBuilders
@@ -124,21 +120,21 @@ public class ExpenseControllerIT {
         expenseRepository.saveAndFlush(Expense.builder()
                 .name("Bread")
                 .budget(budget)
-                .dateOfExpense(LocalDateTime.now())
+                .dateOfExpense(LocalDate.now())
                 .kindOfExpense(KindOfExpense.NEED)
                 .price(10.0)
                 .build());
         expenseRepository.saveAndFlush(Expense.builder()
                 .name("Lamp")
                 .budget(budget)
-                .dateOfExpense(LocalDateTime.now())
+                .dateOfExpense(LocalDate.now())
                 .kindOfExpense(KindOfExpense.CRAVING)
                 .price(15.0)
                 .build());
         expenseRepository.saveAndFlush(Expense.builder()
                 .name("Shoes")
                 .budget(budget)
-                .dateOfExpense(LocalDateTime.now())
+                .dateOfExpense(LocalDate.now())
                 .kindOfExpense(KindOfExpense.CRAVING)
                 .price(121.0)
                 .build());

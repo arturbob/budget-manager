@@ -6,7 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class Expense implements Serializable {
     private String name;
     private Double price;
     @CreatedDate
-    private LocalDateTime dateOfExpense;
+    private LocalDate dateOfExpense;
     @Enumerated(EnumType.STRING)
     private KindOfExpense kindOfExpense;
     @ManyToOne

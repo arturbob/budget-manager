@@ -93,13 +93,13 @@ public class BudgetControllerIT {
     @Test
     @WithUserDetails(value = "Admin", setupBefore = TestExecutionEvent.TEST_EXECUTION, userDetailsServiceBeanName = "userDetailsService")
     public void shouldSaveBudget() throws Exception {
-        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2023, 10, 5), 1000L);
-        this.mockMvc.perform(post("/api/v1/budget")
+        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2023, 10, 5), 1000.0);
+        this.mockMvc.perform(post("/api/v1/budgets")
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.budgetSize").value(1000));
+                .andExpect(jsonPath("$.budgetSize").value(1000.0));
         Assertions.assertTrue(budgetRepository.existsBudgetByNameAndCustomer_Login("February", "Admin"));
         Optional<Budget> savedBudget = budgetRepository.findById(1L);
         Assertions.assertTrue(savedBudget.isPresent());
@@ -114,7 +114,7 @@ public class BudgetControllerIT {
                 .name("March")
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
-                .budgetSize(100L)
+                .budgetSize(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
@@ -122,7 +122,7 @@ public class BudgetControllerIT {
                 .name("April")
                 .createDate(LocalDate.of(2023, 3, 21))
                 .expirationDate(LocalDate.of(2023, 4, 20))
-                .budgetSize(225682L)
+                .budgetSize(32125.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
@@ -130,11 +130,11 @@ public class BudgetControllerIT {
                 .name("May")
                 .createDate(LocalDate.of(2023, 4, 22))
                 .expirationDate(LocalDate.of(2023, 5, 21))
-                .budgetSize(15000L)
+                .budgetSize(15000.0)
                 .customer(user)
                 .expenses(Set.of())
                 .build());
-        this.mockMvc.perform(get("/api/v1/budget")
+        this.mockMvc.perform(get("/api/v1/budgets")
                         .param("size", "1")
                         .param("page", "0")
                         .with(user(admin))

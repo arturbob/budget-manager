@@ -80,12 +80,12 @@ public class ExpenseControllerExceptionIT {
                 .name("March")
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
-                .budgetSize(100L)
+                .budgetSize(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
-        ExpenseCommand expenseCommand = new ExpenseCommand("", "Bread", 12L, "NEED");
-        this.mockMvc.perform(post("/api/v1/expense")
+        ExpenseCommand expenseCommand = new ExpenseCommand("", "Bread", 12.0, "NEED");
+        this.mockMvc.perform(post("/api/v1/expenses")
                         .with(user(admin))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expenseCommand))
@@ -107,12 +107,12 @@ public class ExpenseControllerExceptionIT {
                 .name("March")
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
-                .budgetSize(100L)
+                .budgetSize(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
         ExpenseCommand expenseCommand = new ExpenseCommand("March", "Bread", null, "NEED");
-        this.mockMvc.perform(post("/api/v1/expense")
+        this.mockMvc.perform(post("/api/v1/expenses")
                         .with(user(admin))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expenseCommand))
@@ -134,12 +134,12 @@ public class ExpenseControllerExceptionIT {
                 .name("March")
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
-                .budgetSize(100L)
+                .budgetSize(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
-        ExpenseCommand expenseCommand = new ExpenseCommand("March", "Bread", 12L, "");
-        this.mockMvc.perform(post("/api/v1/expense")
+        ExpenseCommand expenseCommand = new ExpenseCommand("March", "Bread", 12.0, "");
+        this.mockMvc.perform(post("/api/v1/expenses")
                         .with(user(admin))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expenseCommand))

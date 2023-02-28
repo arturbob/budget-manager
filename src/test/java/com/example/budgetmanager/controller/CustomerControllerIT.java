@@ -57,7 +57,7 @@ public class CustomerControllerIT {
     @Test
     public void shouldSaveCustomer() throws Exception {
         CustomerCommand customerCommand = new CustomerCommand("John", "Joe123", "password123", "USER");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

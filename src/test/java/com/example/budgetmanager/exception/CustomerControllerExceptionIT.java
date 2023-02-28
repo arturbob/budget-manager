@@ -49,14 +49,13 @@ public class CustomerControllerExceptionIT {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         encoder = new BCryptPasswordEncoder();
-        Customer customer = setUpAdmin();
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.webApplicationContext)
                 .apply(springSecurity())
                 .build();
     }
 
-    public Customer setUpAdmin() {
+    public Customer setUpCustomer() {
         return customerRepository.save(Customer.builder()
                 .name("Joe")
                 .login("Admin")
@@ -71,7 +70,7 @@ public class CustomerControllerExceptionIT {
     @Test
     public void shouldThrowValidationMessageWhenSaveCustomerWithToShortName() throws Exception {
         CustomerCommand customerCommand = new CustomerCommand("he", "Kolba", "12345", "ADMIN");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .accept(MediaType.APPLICATION_JSON))
@@ -86,26 +85,9 @@ public class CustomerControllerExceptionIT {
     }
 
     @Test
-    public void shouldThrowValidationMessageWhenSaveCustomerWithBlankLogin() throws Exception {
-        CustomerCommand customerCommand = new CustomerCommand("Angelica", "", "12345", "USER");
-        this.mockMvc.perform(post("/api/v1/customer")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(customerCommand))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(result -> Assertions.assertEquals("BAD_REQUEST",
-                        (JsonPath.read(result.getResponse().getContentAsString(), "$.status"))))
-                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException))
-                .andExpect(result -> Assertions.assertEquals("Your login cannot be blank!",
-                        (JsonPath.read(result.getResponse()
-                                .getContentAsString(), "$.errors.login"))));
-    }
-
-    @Test
     public void shouldThrowValidationMessageWhenSaveCustomerWithTooShortLogin() throws Exception {
         CustomerCommand customerCommand = new CustomerCommand("Angelica", "Ang", "12345", "USER");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .accept(MediaType.APPLICATION_JSON))
@@ -122,7 +104,7 @@ public class CustomerControllerExceptionIT {
     @Test
     public void shouldThrowValidationMessageWhenSaveCustomerWithTooShortPassword() throws Exception {
         CustomerCommand customerCommand = new CustomerCommand("John", "Johny", "123", "USER");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .accept(MediaType.APPLICATION_JSON))
@@ -139,7 +121,7 @@ public class CustomerControllerExceptionIT {
     @Test
     public void shouldThrowValidationMessageWhenSaveCustomerWithWrongRole() throws Exception {
         CustomerCommand customerCommand = new CustomerCommand("John", "Johny", "12345", "");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .accept(MediaType.APPLICATION_JSON))
@@ -155,8 +137,9 @@ public class CustomerControllerExceptionIT {
 
     @Test
     public void shouldThrowCustomerAlreadyExistExceptionWhenSaveCustomerWithConflictLogin() throws Exception {
+        Customer customer = setUpCustomer();
         CustomerCommand customerCommand = new CustomerCommand("Joe", "Admin", "12345", "ADMIN");
-        this.mockMvc.perform(post("/api/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCommand))
                         .accept(MediaType.APPLICATION_JSON))

@@ -80,7 +80,7 @@ public class BudgetControllerExceptionIT {
     @WithUserDetails(value = "Admin", setupBefore = TestExecutionEvent.TEST_EXECUTION, userDetailsServiceBeanName = "userDetailsService")
     public void shouldThrowValidationMessageWhenSaveBudgetWithNullBudgetSize() throws Exception {
         BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2023, 10, 5), null);
-        this.mockMvc.perform(post("/api/v1/budget")
+        this.mockMvc.perform(post("/api/v1/budgets")
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -97,8 +97,8 @@ public class BudgetControllerExceptionIT {
     @Test
     @WithUserDetails(value = "Admin", setupBefore = TestExecutionEvent.TEST_EXECUTION, userDetailsServiceBeanName = "userDetailsService")
     public void shouldThrowValidationMessageWhenSaveBudgetWithBlankName() throws Exception {
-        BudgetCommand budgetCommand = new BudgetCommand("", LocalDate.of(2023, 10, 5), 1000L);
-        this.mockMvc.perform(post("/api/v1/budget")
+        BudgetCommand budgetCommand = new BudgetCommand("", LocalDate.of(2023, 10, 5), 1000.0);
+        this.mockMvc.perform(post("/api/v1/budgets")
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -119,12 +119,12 @@ public class BudgetControllerExceptionIT {
                 .name("March")
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
-                .budgetSize(100L)
+                .budgetSize(100.0)
                 .customer(customer)
                 .expenses(Set.of())
                 .build());
-        BudgetCommand budgetCommand = new BudgetCommand("March", LocalDate.of(2023, 10, 5), 1000L);
-        this.mockMvc.perform(post("/api/v1/budget")
+        BudgetCommand budgetCommand = new BudgetCommand("March", LocalDate.of(2023, 10, 5), 1000.0);
+        this.mockMvc.perform(post("/api/v1/budgets")
                         .with(user(customer))
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .contentType(MediaType.APPLICATION_JSON)

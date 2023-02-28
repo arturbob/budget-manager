@@ -1,6 +1,9 @@
 package com.example.budgetmanager.command;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -9,7 +12,6 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class CustomerCommand {
     @Size(min = 3, message = "Your name cannot be shorter than 3 letters!")
     private String name;

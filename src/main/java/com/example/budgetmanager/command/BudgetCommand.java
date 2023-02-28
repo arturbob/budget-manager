@@ -1,6 +1,9 @@
 package com.example.budgetmanager.command;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
@@ -12,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class BudgetCommand {
     @NotBlank(message = "Your feature name of budget cannot be blank!")
     private String name;

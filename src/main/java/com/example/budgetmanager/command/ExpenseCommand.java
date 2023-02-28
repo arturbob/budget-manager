@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class ExpenseCommand {
     private String budgetName;
     @NotBlank(message = "Name of your expense cannot be blank!")

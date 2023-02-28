@@ -1,5 +1,7 @@
 package com.example.budgetmanager.config.security;
 
+import com.example.budgetmanager.config.security.jwt.CustomAuthenticationEntryPoint;
+import com.example.budgetmanager.config.security.jwt.JwtAuthenticationFilter;
 import com.example.budgetmanager.repository.CustomerRepository;
 import com.example.budgetmanager.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +19,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final CustomerRepository customerRepository;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final CustomAuthenticationEntryPoint entryPoint;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -30,13 +35,13 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService(customerRepository);
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService(customerRepository);
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 
     @Bean
@@ -60,9 +65,10 @@ public class WebSecurityConfig {
                 .authorizeRequests((authz) -> {
                             try {
                                 authz
-                                        .antMatchers(HttpMethod.POST, "/api/v1/budgets").hasAnyAuthority("ADMIN", "USER")
-                                        .antMatchers(HttpMethod.POST, "/api/v1/expenses").hasAnyAuthority("ADMIN", "USER")
+                                        .antMatchers(HttpMethod.POST, "/api/v1/figures/**").hasAnyAuthority("ADMIN", "CREATOR")
+                                        .antMatchers(HttpMethod.GET, "/api/v1/figures/**").hasAnyAuthority("CREATOR", "USER", "ADMIN")
                                         .antMatchers(HttpMethod.POST, "/api/v1/customers").permitAll()
+                                        .antMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
                                         .anyRequest()
                                         .authenticated()
                                         .and()
@@ -70,7 +76,9 @@ public class WebSecurityConfig {
                                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                                         .and()
                                         .authenticationProvider(authenticationProvider())
+                                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                                         .exceptionHandling()
+                                        .authenticationEntryPoint(entryPoint)
                                         .accessDeniedHandler(accessDeniedHandler());
                             } catch (Exception e) {
                                 throw new RuntimeException(e);

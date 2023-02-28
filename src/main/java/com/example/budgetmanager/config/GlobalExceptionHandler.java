@@ -2,6 +2,7 @@ package com.example.budgetmanager.config;
 
 import com.example.budgetmanager.exception.BudgetAlreadyExistException;
 import com.example.budgetmanager.exception.BudgetNotFoundException;
+import com.example.budgetmanager.exception.BudgetExceededException;
 import com.example.budgetmanager.exception.CustomerAlreadyExistException;
 import com.example.budgetmanager.model.ApiError;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {CustomerAlreadyExistException.class, BudgetAlreadyExistException.class})
+    @ExceptionHandler(value = {CustomerAlreadyExistException.class, BudgetAlreadyExistException.class, BudgetExceededException.class})
     protected ResponseEntity<ApiError> handleInvalidDataExceptions(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
         logger.error(ex.getMessage());

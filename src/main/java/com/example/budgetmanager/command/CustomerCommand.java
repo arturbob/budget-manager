@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 public class CustomerCommand {
-    @NotBlank(message = "Your name cannot be blank!")
     @Size(min = 3, message = "Your name cannot be shorter than 3 letters!")
     private String name;
     @NotBlank(message = "Your login cannot be blank!")

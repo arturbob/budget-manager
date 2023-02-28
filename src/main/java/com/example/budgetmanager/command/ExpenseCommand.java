@@ -17,7 +17,7 @@ public class ExpenseCommand {
     private String name;
     @Min(1L)
     @NotNull(message = "Price of your expense cannot be null")
-    private Long price;
+    private Double price;
     @NotBlank(message = "Define kind of your expense (CRAVING/NEED)")
     private String kindOfExpense;
 }

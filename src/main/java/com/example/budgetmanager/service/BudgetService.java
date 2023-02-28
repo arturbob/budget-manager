@@ -19,6 +19,7 @@ public class BudgetService {
                 userDetailsService.getUserDetails().getUsername())) {
             throw new BudgetAlreadyExistException();
         }
+        budget.setBudgetLeft(budget.getBudgetSize());
         return budgetRepository.save(budget);
     }
 

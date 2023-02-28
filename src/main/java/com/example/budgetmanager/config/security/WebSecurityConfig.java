@@ -60,9 +60,9 @@ public class WebSecurityConfig {
                 .authorizeRequests((authz) -> {
                             try {
                                 authz
-                                        .antMatchers(HttpMethod.POST, "/api/v1/budget").hasAnyAuthority("ADMIN", "USER")
-                                        .antMatchers(HttpMethod.POST, "/api/v1/expense").hasAnyAuthority("ADMIN", "USER")
-                                        .antMatchers(HttpMethod.POST, "/api/v1/customer").permitAll()
+                                        .antMatchers(HttpMethod.POST, "/api/v1/budgets").hasAnyAuthority("ADMIN", "USER")
+                                        .antMatchers(HttpMethod.POST, "/api/v1/expenses").hasAnyAuthority("ADMIN", "USER")
+                                        .antMatchers(HttpMethod.POST, "/api/v1/customers").permitAll()
                                         .anyRequest()
                                         .authenticated()
                                         .and()

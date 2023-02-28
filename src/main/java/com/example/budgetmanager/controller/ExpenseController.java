@@ -1,6 +1,7 @@
 package com.example.budgetmanager.controller;
 
 import com.example.budgetmanager.command.ExpenseCommand;
+import com.example.budgetmanager.domain.BudgetStatus;
 import com.example.budgetmanager.dto.ExpenseDTO;
 import com.example.budgetmanager.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/expense")
+@RequestMapping("/api/v1/expenses")
 @RequiredArgsConstructor
 public class ExpenseController {
     private final ExpenseService expenseService;
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ExpenseDTO> save(@RequestBody @Valid ExpenseCommand expenseCommand) {
-        return new ResponseEntity<>(modelMapper
-                .map(expenseService
-                        .save(expenseCommand), ExpenseDTO.class), HttpStatus.CREATED);
+    public ResponseEntity<BudgetStatus> save(@RequestBody @Valid ExpenseCommand expenseCommand) {
+        return new ResponseEntity<>(expenseService.save(expenseCommand), HttpStatus.CREATED);
     }
 
     @GetMapping("/{budgetName}")

@@ -23,6 +23,8 @@ public class ExpenseFilterRepository extends QuerydslRepositorySupport implement
         QExpense expense = QExpense.expense;
         JPQLQuery<Expense> query = from(expense);
 
+
+
         return PageableExecutionUtils
                 .getPage(Objects.requireNonNull(getQuerydsl())
                         .applyPagination(pageable, query).fetch(), pageable, query::fetchCount);

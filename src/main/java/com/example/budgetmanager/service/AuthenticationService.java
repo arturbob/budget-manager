@@ -3,8 +3,8 @@ package com.example.budgetmanager.service;
 import com.example.budgetmanager.config.security.jwt.JwtService;
 import com.example.budgetmanager.domain.Customer;
 import com.example.budgetmanager.exception.CustomerNotFoundException;
-import com.example.budgetmanager.model.JWTRequest;
-import com.example.budgetmanager.model.JWTResponse;
+import com.example.budgetmanager.model.AuthenticationRequest;
+import com.example.budgetmanager.model.AuthenticationResponse;
 import com.example.budgetmanager.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,12 +18,12 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final CustomerRepository customerRepository;
 
-    public JWTResponse authenticate(JWTRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         Customer customer = customerRepository.findByLogin(request.getLogin())
                 .orElseThrow(CustomerNotFoundException::new);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
         String jwtToken = jwtService.generateToken(customer);
-        return JWTResponse.builder()
+        return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }

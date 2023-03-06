@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JWTResponse {
+public class AuthenticationResponse {
     private String token;
 }

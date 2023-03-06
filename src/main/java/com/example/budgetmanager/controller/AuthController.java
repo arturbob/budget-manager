@@ -1,7 +1,7 @@
 package com.example.budgetmanager.controller;
 
-import com.example.budgetmanager.model.JWTRequest;
-import com.example.budgetmanager.model.JWTResponse;
+import com.example.budgetmanager.model.AuthenticationRequest;
+import com.example.budgetmanager.model.AuthenticationResponse;
 import com.example.budgetmanager.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<JWTResponse> authenticate(@RequestBody JWTRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return new ResponseEntity<>(authenticationService.authenticate(request), HttpStatus.OK);
     }
 }

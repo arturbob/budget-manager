@@ -81,6 +81,7 @@ public class ExpenseControllerExceptionIT {
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
                 .budgetSize(100.0)
+                .budgetLeft(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
@@ -108,6 +109,7 @@ public class ExpenseControllerExceptionIT {
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
                 .budgetSize(100.0)
+                .budgetLeft(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
@@ -135,6 +137,7 @@ public class ExpenseControllerExceptionIT {
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
                 .budgetSize(100.0)
+                .budgetLeft(100.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());

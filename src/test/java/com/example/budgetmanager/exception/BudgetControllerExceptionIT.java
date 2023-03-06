@@ -120,6 +120,7 @@ public class BudgetControllerExceptionIT {
                 .createDate(LocalDate.now())
                 .expirationDate(LocalDate.of(2023, 3, 20))
                 .budgetSize(100.0)
+                .budgetLeft(100.0)
                 .customer(customer)
                 .expenses(Set.of())
                 .build());

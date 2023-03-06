@@ -1,9 +1,6 @@
 package com.example.budgetmanager.config;
 
-import com.example.budgetmanager.exception.BudgetAlreadyExistException;
-import com.example.budgetmanager.exception.BudgetNotFoundException;
-import com.example.budgetmanager.exception.BudgetExceededException;
-import com.example.budgetmanager.exception.CustomerAlreadyExistException;
+import com.example.budgetmanager.exception.*;
 import com.example.budgetmanager.model.ApiError;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -40,14 +37,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {CustomerAlreadyExistException.class, BudgetAlreadyExistException.class, BudgetExceededException.class})
+    @ExceptionHandler(value = {CustomerAlreadyExistException.class, BudgetAlreadyExistException.class, BudgetExceededException.class, BudgetExpiredException.class})
     protected ResponseEntity<ApiError> handleInvalidDataExceptions(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
         logger.error(ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {BudgetNotFoundException.class})
+    @ExceptionHandler(value = {BudgetNotFoundException.class, CustomerNotFoundException.class})
     protected ResponseEntity<ApiError> handleNotFoundExceptions(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
         logger.error(ex.getMessage());

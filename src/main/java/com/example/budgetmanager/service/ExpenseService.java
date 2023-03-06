@@ -2,11 +2,12 @@ package com.example.budgetmanager.service;
 
 import com.example.budgetmanager.command.ExpenseCommand;
 import com.example.budgetmanager.domain.Budget;
-import com.example.budgetmanager.model.BudgetStatus;
 import com.example.budgetmanager.domain.Expense;
 import com.example.budgetmanager.dto.ExpenseDTO;
 import com.example.budgetmanager.exception.BudgetExceededException;
+import com.example.budgetmanager.exception.BudgetExpiredException;
 import com.example.budgetmanager.exception.BudgetNotFoundException;
+import com.example.budgetmanager.model.BudgetStatus;
 import com.example.budgetmanager.model.KindOfExpense;
 import com.example.budgetmanager.model.ValueOfExpense;
 import com.example.budgetmanager.repository.BudgetRepository;
@@ -37,7 +38,6 @@ public class ExpenseService {
         return buildBudgetStatus(expense, budget, budgetSizeBeforeExpense, budgetSizeAfterExpense);
     }
 
-//    @Transactional
     public Expense buildAndSave(ExpenseCommand expenseCommand) {
         Budget budget = findBudgetForAuthenticatedCustomer(expenseCommand.getBudgetName());
         return expenseRepository.save(Expense.builder()
@@ -56,12 +56,15 @@ public class ExpenseService {
                 .valueOfExpense(valueOfExpense(budgetSizeBeforeExpense, budgetSizeAfterExpense))
                 .build();
     }
+
     @Transactional
     public Double addExpenseToBudget(Budget budget, Expense expense) {
         budget.getExpenses().add(expense);
         budget.setBudgetLeft(budget.getBudgetLeft() - expense.getPrice());
         if (budget.getBudgetLeft() < 0) {
             throw new BudgetExceededException(budget.getBudgetLeft());
+        } else if (budget.getExpirationDate().isBefore(LocalDate.now())) {
+            throw new BudgetExpiredException(budget.getExpirationDate());
         }
         budgetRepository.save(budget);
         return budget.getBudgetLeft();

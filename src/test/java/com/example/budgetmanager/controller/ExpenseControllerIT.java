@@ -11,7 +11,6 @@ import com.example.budgetmanager.repository.CustomerRepository;
 import com.example.budgetmanager.repository.ExpenseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -93,7 +93,7 @@ public class ExpenseControllerIT {
                 .expenses(Set.of())
                 .build());
         Optional<Budget> budget = budgetRepository.findBudgetByNameAndCustomerLogin("MARCH", customer.getLogin());
-        Assertions.assertTrue(budget.isPresent());
+        assertThat(budget.isPresent()).isTrue();
         ExpenseCommand expenseCommand = new ExpenseCommand("MARCH", "Apple", 1.0, "NEED");
         this.mockMvc.perform(post("/api/v1/expenses")
                         .with(user(customer))
@@ -107,11 +107,10 @@ public class ExpenseControllerIT {
                 .andExpect(jsonPath("$.expense.price").value(1.0));
 
         Optional<Expense> savedExpense = expenseRepository.findById(1L);
-        Assertions.assertTrue(savedExpense.isPresent());
-
-        Assertions.assertEquals(1.0, savedExpense.get().getPrice());
-        Assertions.assertEquals("Apple", savedExpense.get().getName());
-        Assertions.assertEquals(KindOfExpense.NEED, savedExpense.get().getKindOfExpense());
+        assertThat(savedExpense.isPresent()).isTrue();
+        assertThat(savedExpense.get().getPrice()).isEqualTo(1.0);
+        assertThat(savedExpense.get().getName()).isEqualTo("Apple");
+        assertThat(savedExpense.get().getKindOfExpense()).isEqualTo(KindOfExpense.NEED);
     }
 
     @Test

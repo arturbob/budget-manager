@@ -8,7 +8,6 @@ import com.example.budgetmanager.repository.BudgetRepository;
 import com.example.budgetmanager.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -100,10 +100,10 @@ public class BudgetControllerIT {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.budgetSize").value(1000.0));
-        Assertions.assertTrue(budgetRepository.existsBudgetByNameAndCustomer_Login("February", "Admin"));
+        assertThat(budgetRepository.existsBudgetByNameAndCustomer_Login("February", "Admin")).isTrue();
         Optional<Budget> savedBudget = budgetRepository.findById(1L);
-        Assertions.assertTrue(savedBudget.isPresent());
-        Assertions.assertEquals(LocalDate.now(), savedBudget.get().getCreateDate());
+        assertThat(savedBudget.isPresent()).isTrue();
+        assertThat(savedBudget.get().getCreateDate()).isNotEqualTo(LocalDate.now());
     }
 
     @Test

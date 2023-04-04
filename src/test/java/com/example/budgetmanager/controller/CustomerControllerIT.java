@@ -6,7 +6,6 @@ import com.example.budgetmanager.model.Role;
 import com.example.budgetmanager.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -66,10 +66,10 @@ public class CustomerControllerIT {
                 .andExpect(jsonPath("$.login").value("Joe123"));
 
         Optional<Customer> savedCustomer = customerRepository.findByLogin(customerCommand.getLogin());
-        Assertions.assertTrue(savedCustomer.isPresent());
+        assertThat(savedCustomer.isPresent()).isTrue();
         Customer customer = savedCustomer.get();
-        Assertions.assertEquals("Joe123", customer.getLogin());
-        Assertions.assertTrue(encoder.matches("password123", customer.getPassword()));
-        Assertions.assertEquals(Role.USER, customer.getRole());
+        assertThat(customer.getLogin()).isEqualTo("Joe123");
+        assertThat(encoder.matches("password123", customer.getPassword())).isTrue();
+        assertThat(customer.getRole()).isEqualTo(Role.USER);
     }
 }

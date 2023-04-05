@@ -93,7 +93,7 @@ public class BudgetControllerIT {
     @Test
     @WithUserDetails(value = "Admin", setupBefore = TestExecutionEvent.TEST_EXECUTION, userDetailsServiceBeanName = "userDetailsService")
     public void shouldSaveBudget() throws Exception {
-        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2023, 10, 5), 1000.0);
+        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2029, 10, 5), 1000.0);
         this.mockMvc.perform(post("/api/v1/budgets")
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .contentType(MediaType.APPLICATION_JSON)

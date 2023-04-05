@@ -93,12 +93,13 @@ public class AuthControllerIT {
                 .getResponse()
                 .getContentAsString();
         String jwt = JsonPath.read(responseJson, "$.token");
-        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2023, 10, 5), 1000.0);
+        BudgetCommand budgetCommand = new BudgetCommand("February", LocalDate.of(2029, 10, 5), 1000.0);
         this.mockMvc.perform(post("/api/v1/budgets")
                         .header("Authorization", "Bearer " + jwt)
                         .content(objectMapper.writeValueAsString(budgetCommand))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.budgetSize").value(1000.0));
         assertThat(budgetRepository.existsBudgetByNameAndCustomer_Login("February", "Admin")).isTrue();

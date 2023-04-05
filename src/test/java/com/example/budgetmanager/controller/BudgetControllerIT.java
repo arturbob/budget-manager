@@ -103,7 +103,7 @@ public class BudgetControllerIT {
         assertThat(budgetRepository.existsBudgetByNameAndCustomer_Login("February", "Admin")).isTrue();
         Optional<Budget> savedBudget = budgetRepository.findById(1L);
         assertThat(savedBudget.isPresent()).isTrue();
-        assertThat(savedBudget.get().getCreateDate()).isNotEqualTo(LocalDate.now());
+        assertThat(savedBudget.get().getCreateDate()).isEqualTo(LocalDate.now());
     }
 
     @Test
@@ -116,6 +116,7 @@ public class BudgetControllerIT {
                 .expirationDate(LocalDate.of(2023, 3, 20))
                 .budgetSize(100.0)
                 .customer(admin)
+                .budgetLeft(100.0)
                 .expenses(Set.of())
                 .build());
         budgetRepository.save(Budget.builder()
@@ -123,6 +124,7 @@ public class BudgetControllerIT {
                 .createDate(LocalDate.of(2023, 3, 21))
                 .expirationDate(LocalDate.of(2023, 4, 20))
                 .budgetSize(32125.0)
+                .budgetLeft(32125.0)
                 .customer(admin)
                 .expenses(Set.of())
                 .build());
@@ -131,6 +133,7 @@ public class BudgetControllerIT {
                 .createDate(LocalDate.of(2023, 4, 22))
                 .expirationDate(LocalDate.of(2023, 5, 21))
                 .budgetSize(15000.0)
+                .budgetLeft(15000.0)
                 .customer(user)
                 .expenses(Set.of())
                 .build());

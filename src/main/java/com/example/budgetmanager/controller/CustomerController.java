@@ -23,14 +23,14 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "Api for customer process", description = "Thanks to customer api, we can create a new customer")
+@Tag(name = "Customer controller", description = "Thanks to customer api, we can create a new customer")
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
     private final ModelMapper modelMapper;
 
-    @Operation(summary = "Save a customer")
+    @Operation(summary = "Save a customer", description = "The endpoint through which we can create a new customer")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Customer created",
                     content = { @Content(mediaType = "application/json",

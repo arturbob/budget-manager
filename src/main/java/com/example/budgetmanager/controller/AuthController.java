@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Api for authentication", description = "Thanks to authentication api, we can got authentication")
+@Tag(name = "Authentication controller", description = "Thanks to authentication api, we can got authentication")
 @RequestMapping("/api/v1/authentication")
 public class AuthController {
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "Get authentication token")
+    @Operation(summary = "Get authentication token", description = "The endpoint through which we can got a new auth token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Got the token",
             content = { @Content(mediaType = "application/json",

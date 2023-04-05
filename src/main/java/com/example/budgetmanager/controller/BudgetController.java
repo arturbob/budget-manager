@@ -23,13 +23,13 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "Api for budget process", description = "Thanks to budget api we can create a new budget or got a list of ours")
+@Tag(name = "Budget controller", description = "Thanks to budget api we can create a new budget or got a list of ours")
 @RequestMapping("/api/v1/budgets")
 public class BudgetController {
     private final BudgetService budgetService;
     private final ModelMapper modelMapper;
 
-    @Operation(summary = "Save a budget")
+    @Operation(summary = "Save a budget", description = "The endpoint through which we can create a new budget")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Budget created",
                     content = { @Content(mediaType = "application/json",
@@ -42,7 +42,7 @@ public class BudgetController {
                         .save(modelMapper
                                 .map(budgetCommand, Budget.class)), BudgetDTO.class), HttpStatus.CREATED);
     }
-    @Operation(summary = "Get a budget")
+    @Operation(summary = "Get a budget", description = "The endpoint through which we can get a page of ours budgets")
     @GetMapping
     public ResponseEntity<Page<BudgetDTO>> listAll(@PageableDefault Pageable pageable) {
         return new ResponseEntity<>(budgetService.listAllWithPagination(pageable)

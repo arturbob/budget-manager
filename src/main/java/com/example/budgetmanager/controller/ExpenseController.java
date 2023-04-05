@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@Tag(name = "Api for expense process", description = "Thanks to expense budget, we can add new expense into our budget and list our expenses")
+@Tag(name = "Expense controller", description = "Thanks to expense budget, we can add new expense into our budget and list our expenses")
 @RequestMapping("/api/v1/expenses")
 @RequiredArgsConstructor
 public class ExpenseController {
     private final ExpenseService expenseService;
     private final ModelMapper modelMapper;
 
-    @Operation(summary = "Save an expense")
+    @Operation(summary = "Save an expense", description = "The endpoint through which we can create a new expense")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Expense added",
                     content = { @Content(mediaType = "application/json",
